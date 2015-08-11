@@ -1,8 +1,0 @@
-logs/
-temp/
-SysReports/
-vstlib/
-alerts/
-scripts/
-include/
-config/
