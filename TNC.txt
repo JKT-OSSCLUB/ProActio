@@ -1,0 +1,36 @@
+Terms and Conditions of Use
+
+All materials in the ProActio package are copyrighted by JK Technosoft
+(http://www.jktech.com), all rights reserved. No content or programming code may be sold, published or
+distributed without express permission from the author except as described below.
+
+Use of Source Code
+
+All programming code in ProActio may be used, redistributed and/or modified
+under the terms of the GNU General Public License (see GPL.TXT) as
+published by the Free Software Foundation (http://www.fsf.org), either
+version 2 of the License or (at your option) any later version.
+
+No support, guarantee or warranty is offered or implied. By using any code
+found herein you assume full risk and responsibility for that use.
+
+Use of Other Materials
+
+Articles or other informational material found in this package or on the
+website may not be posted or published elsewhere, in whole or in part,
+without express permission. You may, however, make copies for your own
+personal reference.
+
+Alternative licensing is available.
+
+Other parties who wishes to distribute ProActio with their
+commercial products, and who are not licensing and distributing their
+source code under the GPL, or who do not wish to be bound by the GPL need
+to purchase a commercial license of ProActio.
+
+Licensing Terms can be tailored to meet the unique requirements of 
+other parties interested in embedding, bundling, reselling
+or otherwise using ProActio outside of the GPL.
+
+(c) 2015-2017 by JK Technosoft
+http://www.jktech.com
