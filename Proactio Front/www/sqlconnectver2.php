@@ -43,9 +43,9 @@
  *
  */
 $message="";
-$database = "192.168.10.55";
-$usera="root";
-$passa="progress";
+$database = "";
+$usera="";
+$passa="";
 $connect = mysql_connect($database,$usera,$passa);
 $dbase= mysql_select_db("oemon", $connect);
 if(!$connect = mysql_connect($database,$usera,$passa))
