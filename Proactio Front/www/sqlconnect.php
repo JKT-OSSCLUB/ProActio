@@ -43,9 +43,9 @@
  *
  */
 $message1="";
-$hostname = "192.168.10.55";
-$usera="root";
-$passa="progress";
+$hostname = "";
+$usera="";
+$passa="";
 if(!$connect = @mysqli_connect($hostname,$usera,$passa,"oemon"))
 {
 $message1="MYSQL database not Accessible Please Check The Database Configuration";
