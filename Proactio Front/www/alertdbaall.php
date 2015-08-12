@@ -43,7 +43,7 @@
  *
  */
 
-php include('header.php');
+include('header.php');
 $user=$_SESSION['username'];
 ?>
 
