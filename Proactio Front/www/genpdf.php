@@ -254,8 +254,8 @@ $pdf->AddPage();
 $pdf->SetFont('Arial','',20);
 $pdf->setFillColor(63,139,202); 
 $pdf->SetTextColor(253,253,253);
-$pdf->Cell(0,10,'Database growth/size',1,1,'C',1);
-$pdf->TOC_Entry('Database growth/size',0);
+$pdf->Cell(0,10,'Database Growth',1,1,'C',1);
+$pdf->TOC_Entry('Database Growth',0);
 $pdf->SetTextColor(0,0,0);
 $pdf->SetFont('Arial','',15);
 if($query = mysql_query("SELECT dbuid,dbname FROM configureddb INNER JOIN dbalogin where  dbalogin.username ='$current_user'")){
