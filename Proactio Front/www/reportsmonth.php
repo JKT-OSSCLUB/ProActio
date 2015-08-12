@@ -54,7 +54,7 @@ $pdf->SetFont('Arial','',32);
 $pdf->Cell(0,10,'Monthly Report',0,1,'C');
 $pdf->Ln(10);
 $pdf->SetFont('Arial','',20);
-$pdf->Cell(0,1,'FOR  '.date("F o"),0,1,'C');
+$pdf->Cell(0,1,'From  '.date('d-M-Y', strtotime('-30 days')).' to '.date("d-M-Y"),0,1,'C');
 include('sqlconnectver2.php');
 if($query = mysql_query("SELECT dbuid,dbname,environ FROM configureddb INNER JOIN dbalogin where  dbalogin.username ='$current_user'")){
 $pdf->AddPage();
@@ -181,8 +181,8 @@ $pdf->AddPage();
 $pdf->SetFont('Arial','',20);
 $pdf->setFillColor(63,139,202); 
 $pdf->SetTextColor(253,253,253);
-$pdf->Cell(0,10,'Disk Performance',1,1,'C',1);
-$pdf->TOC_Entry('Disk Performance',0);
+$pdf->Cell(0,10,'Disk Utilization',1,1,'C',1);
+$pdf->TOC_Entry('Disk Utilization',0);
 $pdf->SetTextColor(0,0,0);
 $pdf->SetFont('Times','',14);	
 if($query = mysql_query("SELECT  distinct server FROM configureddb INNER JOIN dbalogin where  dbalogin.username ='$current_user' group by server")){
@@ -217,8 +217,8 @@ $pdf->AddPage();
 $pdf->SetFont('Arial','',20);
 $pdf->setFillColor(63,139,202); 
 $pdf->SetTextColor(253,253,253);
-$pdf->Cell(0,10,'Memory Performance',1,1,'C',1);
-$pdf->TOC_Entry('Memory Performance',0);
+$pdf->Cell(0,10,'Memory Utilization',1,1,'C',1);
+$pdf->TOC_Entry('Memory Utilization',0);
 $pdf->SetTextColor(0,0,0);
 $pdf->SetFont('Arial','',15);
 if($query = mysql_query("SELECT  distinct server FROM configureddb INNER JOIN dbalogin where  dbalogin.username ='$current_user' group by server")){
@@ -253,8 +253,8 @@ $pdf->AddPage();
 $pdf->SetFont('Arial','',20);
 $pdf->setFillColor(63,139,202); 
 $pdf->SetTextColor(253,253,253);
-$pdf->Cell(0,10,'Database growth/size',1,1,'C',1);
-$pdf->TOC_Entry('Database growth/size',0);
+$pdf->Cell(0,10,'Database Growth',1,1,'C',1);
+$pdf->TOC_Entry('Database Growth',0);
 $pdf->SetTextColor(0,0,0);
 $pdf->SetFont('Arial','',15);
 if($query = mysql_query("SELECT dbuid,dbname FROM configureddb INNER JOIN dbalogin where  dbalogin.username ='$current_user'")){
@@ -290,7 +290,6 @@ if($chd2=="")
 $chd2=0;
 }
 $pdf->SetFont('Times','',8);
-//$pdf->Cell(0,10,"http://chart.googleapis.com/chart?cht=bvg&chd=t:$chd1|$chd2&chs=1000x300&chl=$ch1&chco=FF0000,00FF00&chxt=x,y&chbh=30,15,25",1,1,'C');
 $pdf->Cell( 40, 140, $pdf->Image("http://chart.googleapis.com/chart?cht=bvg&chd=t:$chd1|$chd2&chs=1000x300&chl=$ch1&chco=D9534F,428BCA&chxt=x,y&chbh=30,15,25",$pdf->GetX(),$pdf->GetY(),280,100,'PNG'), 0, 0, 'L', false );
 $pdf->Cell( 60, 140, $pdf->Image("images/current-month.jpg",$pdf->GetX(),$pdf->GetY(),160,15,'JPG'), 0, 0, 'L', false );
 }
