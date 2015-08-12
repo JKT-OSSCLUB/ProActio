@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2015 at 09:07 AM
+-- Generation Time: Aug 12, 2015 at 07:14 AM
 -- Server version: 5.6.21-log
 -- PHP Version: 5.6.3
 
@@ -56,7 +56,6 @@ INSERT INTO `alertdesc` (`desc_id`, `alertdisc`, `alerttype`) VALUES
 (23, 'Physical Memory Space Alert', 'Minor'),
 (24, 'Swap Memory Alert', 'Minor'),
 (25, 'File System Free Space Alert', 'Minor');
-
 -- --------------------------------------------------------
 
 --
@@ -71,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `alerts` (
   `alert_read` tinyint(1) NOT NULL,
   `enddate` datetime DEFAULT NULL,
   `info` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -86,7 +85,6 @@ CREATE TABLE IF NOT EXISTS `areagrowth` (
   `totalalloc` int(25) NOT NULL,
   `hiwater` int(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 
 -- --------------------------------------------------------
 
@@ -197,7 +195,6 @@ CREATE TABLE IF NOT EXISTS `dbalogin` (
 
 INSERT INTO `dbalogin` (`Name`, `username`, `password`, `email`) VALUES
 ('', 'admin', 'c96c0874e3598147f8508afca93afde7', 'ezaz.war@jktech.com');
-
 -- --------------------------------------------------------
 
 --
@@ -208,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `dbparam` (
 `dbid` int(50) NOT NULL,
   `userid` varchar(30) NOT NULL,
   `dbuid` varchar(30) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -325,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `request` (
 `reqid` int(20) NOT NULL,
   `userid` varchar(50) NOT NULL,
   `dbuid` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -369,21 +366,6 @@ CREATE TABLE IF NOT EXISTS `userio` (
   `dbwrites` int(25) NOT NULL,
   `dbreads` int(25) NOT NULL,
   `name` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `userlist`
---
-
-CREATE TABLE IF NOT EXISTS `userlist` (
-  `dbid` int(50) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user` varchar(25) NOT NULL,
-  `username` int(25) NOT NULL,
-  `name` int(30) NOT NULL,
-  `lastlogin` int(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -445,18 +427,6 @@ ALTER TABLE `dbalogin`
  ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `dbdisc`
---
-ALTER TABLE `dbdisc`
- ADD KEY `dbdisc_fk` (`dbid`);
-
---
--- Indexes for table `dbfeatures`
---
-ALTER TABLE `dbfeatures`
- ADD KEY `dbfeatures_fk` (`dbid`);
-
---
 -- Indexes for table `dbparam`
 --
 ALTER TABLE `dbparam`
@@ -508,7 +478,7 @@ ALTER TABLE `memrep`
 -- Indexes for table `request`
 --
 ALTER TABLE `request`
- ADD PRIMARY KEY (`reqid`);
+ ADD PRIMARY KEY (`reqid`), ADD KEY `idx` (`userid`);
 
 --
 -- Indexes for table `tableio`
@@ -529,12 +499,6 @@ ALTER TABLE `userio`
  ADD KEY `userio_fk` (`dbid`);
 
 --
--- Indexes for table `userlist`
---
-ALTER TABLE `userlist`
- ADD KEY `userlist_fk` (`dbid`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -542,17 +506,17 @@ ALTER TABLE `userlist`
 -- AUTO_INCREMENT for table `alerts`
 --
 ALTER TABLE `alerts`
-MODIFY `alertid` int(50) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=200;
+MODIFY `alertid` int(50) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `dbparam`
 --
 ALTER TABLE `dbparam`
-MODIFY `dbid` int(50) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
+MODIFY `dbid` int(50) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-MODIFY `reqid` int(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `reqid` int(20) NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
@@ -561,13 +525,38 @@ MODIFY `reqid` int(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- Constraints for table `alerts`
 --
 ALTER TABLE `alerts`
-ADD CONSTRAINT `alerts_ibfk_1` FOREIGN KEY (`desc_id`) REFERENCES `alertdesc` (`desc_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `alerts_ibfk_1` FOREIGN KEY (`desc_id`) REFERENCES `alertdesc` (`desc_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `alerts_ibfk_2` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `areagrowth`
+--
+ALTER TABLE `areagrowth`
+ADD CONSTRAINT `areagrowth_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `bireport`
+--
+ALTER TABLE `bireport`
+ADD CONSTRAINT `bireport_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `connect`
+--
+ALTER TABLE `connect`
+ADD CONSTRAINT `connect_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `cpurep`
 --
 ALTER TABLE `cpurep`
 ADD CONSTRAINT `cpurep_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `databaseio`
+--
+ALTER TABLE `databaseio`
+ADD CONSTRAINT `databaseio_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `dbparam`
@@ -583,16 +572,52 @@ ALTER TABLE `dbsizerep`
 ADD CONSTRAINT `dbsizerep_ibfk_1` FOREIGN KEY (`dbuid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `diskrep`
+--
+ALTER TABLE `diskrep`
+ADD CONSTRAINT `diskrep_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `idxstat`
+--
+ALTER TABLE `idxstat`
+ADD CONSTRAINT `idxstat_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `longtrans`
+--
+ALTER TABLE `longtrans`
+ADD CONSTRAINT `longtrans_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `memrep`
 --
 ALTER TABLE `memrep`
 ADD CONSTRAINT `memrep_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `request`
+--
+ALTER TABLE `request`
+ADD CONSTRAINT `request_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login_db` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tableio`
+--
+ALTER TABLE `tableio`
+ADD CONSTRAINT `tableio_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `uconnrep`
 --
 ALTER TABLE `uconnrep`
 ADD CONSTRAINT `uconnrep_ibfk_1` FOREIGN KEY (`dbuid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `userio`
+--
+ALTER TABLE `userio`
+ADD CONSTRAINT `userio_ibfk_1` FOREIGN KEY (`dbid`) REFERENCES `configureddb` (`dbuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
